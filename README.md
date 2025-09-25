@@ -44,13 +44,70 @@ npm run dev
 2. **`GET /actorsWithMultipleCharacters`** - Who played more than one Marvel character?
 3. **`GET /charactersWithMultipleActors`** - Which roles were played by multiple actors?
 
-### Response Format
+### Response Examples
+
+**`/moviesPerActor`**
 
 ```json
 {
   "success": true,
-  "data": { ... },
-  "message": "...",
+  "data": {
+    "Robert Downey Jr.": [
+      "Iron Man",
+      "Iron Man 2",
+      "The Avengers",
+      "Iron Man 3",
+      "Avengers: Age of Ultron",
+      "Captain America: Civil War",
+      "Avengers: Infinity War",
+      "Avengers: Endgame"
+    ],
+    "Chris Evans": [
+      "Captain America: The First Avenger",
+      "The Avengers",
+      "Captain America: The Winter Soldier",
+      "Avengers: Age of Ultron",
+      "Captain America: Civil War",
+      "Avengers: Infinity War",
+      "Avengers: Endgame"
+    ]
+  },
+  "message": "Movies per actor retrieved successfully",
+  "timestamp": "2025-09-25T..."
+}
+```
+
+**`/actorsWithMultipleCharacters`**
+
+```json
+{
+  "success": true,
+  "data": {
+    "Chris Evans": [
+      { "movieName": "Fantastic Four (2005)", "characterName": "Johnny Storm / Human Torch" },
+      {
+        "movieName": "Captain America: The First Avenger",
+        "characterName": "Steve Rogers / Captain America"
+      }
+    ]
+  },
+  "message": "Actors with multiple characters retrieved successfully",
+  "timestamp": "2025-09-25T..."
+}
+```
+
+**`/charactersWithMultipleActors`**
+
+```json
+{
+  "success": true,
+  "data": {
+    "Bruce Banner / Hulk": [
+      { "movieName": "The Incredible Hulk", "actorName": "Edward Norton" },
+      { "movieName": "The Avengers", "actorName": "Mark Ruffalo" }
+    ]
+  },
+  "message": "Characters with multiple actors retrieved successfully",
   "timestamp": "2025-09-25T..."
 }
 ```

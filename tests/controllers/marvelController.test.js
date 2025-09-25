@@ -1,18 +1,18 @@
-import request from 'supertest';
-import express from 'express';
-import { 
+const request = require('supertest');
+const express = require('express');
+const { 
   moviesPerActor, 
   actorsWithMultipleCharacters, 
   charactersWithMultipleActors 
-} from '../../src/controllers/marvelController';
-import * as marvelAnalysisService from '../../src/services/marvelAnalysisService';
+} = require('../../src/controllers/marvelController');
+const marvelAnalysisService = require('../../src/services/marvelAnalysisService');
 
 // Mock the analysis service
 jest.mock('../../src/services/marvelAnalysisService');
-const mockMarvelAnalysisService = marvelAnalysisService as jest.Mocked<typeof marvelAnalysisService>;
+const mockMarvelAnalysisService = marvelAnalysisService;
 
 describe('Marvel Controller', () => {
-  let app: express.Application;
+  let app;
 
   beforeEach(() => {
     jest.clearAllMocks();

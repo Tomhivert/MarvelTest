@@ -1,16 +1,7 @@
-import { tmdbProvider } from '../providers/tmdbProvider';
-import { movies, actors } from '../data';
-import { 
-  MoviesPerActorResponse, 
-  ActorsWithMultipleCharactersResponse, 
-  CharactersWithMultipleActorsResponse,
-  ActorCharacter,
-  CharacterActor,
-  TMDBMovie,
-  TMDBMovieCredits
-} from '../types';
+const { tmdbProvider } = require('../providers/tmdbProvider');
+const { movies, actors } = require('../dataForQuestions');
 
-export const analyzeMarvelData = async () => {
+const analyzeMarvelData = async () => {
   try {
     console.log('Starting Marvel data analysis...');
     
@@ -28,9 +19,9 @@ export const analyzeMarvelData = async () => {
   }
 };
 
-export const getMoviesPerActor = async (): Promise<MoviesPerActorResponse> => {
+const getMoviesPerActor = async () => {
   const marvelMovies = await analyzeMarvelData();
-  const result: MoviesPerActorResponse = {};
+  const result = {};
   
   // Initialize all our known actors
   actors.forEach(actor => {
@@ -43,8 +34,8 @@ export const getMoviesPerActor = async (): Promise<MoviesPerActorResponse> => {
       movie.credits.cast.forEach(castMember => {
         // Check if this actor is in our list
         if (actors.includes(castMember.name)) {
-          if (!result[castMember.name]!.includes(movie.title)) {
-            result[castMember.name]!.push(movie.title);
+          if (!result[castMember.name].includes(movie.title)) {
+            result[castMember.name].push(movie.title);
           }
         }
       });
@@ -61,9 +52,9 @@ export const getMoviesPerActor = async (): Promise<MoviesPerActorResponse> => {
   return result;
 };
 
-export const getActorsWithMultipleCharacters = async (): Promise<ActorsWithMultipleCharactersResponse> => {
+const getActorsWithMultipleCharacters = async () => {
   const marvelMovies = await analyzeMarvelData();
-  const actorCharacters: { [actorName: string]: ActorCharacter[] } = {};
+  const actorCharacters = {};
   
   // Collect all character roles for each actor
   marvelMovies.forEach(movie => {
@@ -75,12 +66,12 @@ export const getActorsWithMultipleCharacters = async (): Promise<ActorsWithMulti
           }
           
           // Check if this character/movie combination already exists
-          const existingRole = actorCharacters[castMember.name]!.find(
+          const existingRole = actorCharacters[castMember.name].find(
             role => role.movieName === movie.title && role.characterName === castMember.character
           );
           
           if (!existingRole) {
-            actorCharacters[castMember.name]!.push({
+            actorCharacters[castMember.name].push({
               movieName: movie.title,
               characterName: castMember.character
             });
@@ -91,7 +82,7 @@ export const getActorsWithMultipleCharacters = async (): Promise<ActorsWithMulti
   });
   
   // Filter to only actors with TRULY DIFFERENT characters (not same character in multiple movies)
-  const result: ActorsWithMultipleCharactersResponse = {};
+  const result = {};
   Object.entries(actorCharacters).forEach(([actorName, characters]) => {
     // Get unique character names (normalize to handle slight variations)
     const uniqueCharacters = [...new Set(characters.map(c => 
@@ -114,9 +105,9 @@ export const getActorsWithMultipleCharacters = async (): Promise<ActorsWithMulti
   return result;
 };
 
-export const getCharactersWithMultipleActors = async (): Promise<CharactersWithMultipleActorsResponse> => {
+const getCharactersWithMultipleActors = async () => {
   const marvelMovies = await analyzeMarvelData();
-  const characterActors: { [characterName: string]: CharacterActor[] } = {};
+  const characterActors = {};
   
   // Collect all actors for each character (normalize character names)
   marvelMovies.forEach(movie => {
@@ -147,7 +138,7 @@ export const getCharactersWithMultipleActors = async (): Promise<CharactersWithM
   });
   
   // Filter to only characters with TRULY DIFFERENT actors
-  const result: CharactersWithMultipleActorsResponse = {};
+  const result = {};
   Object.entries(characterActors).forEach(([characterName, actorsList]) => {
     const uniqueActors = [...new Set(actorsList.map(a => a.actorName))];
     if (uniqueActors.length > 1) {
@@ -157,4 +148,10 @@ export const getCharactersWithMultipleActors = async (): Promise<CharactersWithM
   });
   
   return result;
+};
+
+module.exports = {
+  getMoviesPerActor,
+  getActorsWithMultipleCharacters,
+  getCharactersWithMultipleActors
 };

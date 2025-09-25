@@ -1,6 +1,6 @@
 # Marvel Test - Marvel API Analysis Server
 
-A Node.js TypeScript server that analyzes Marvel movie data using The Movie Database (TMDB) API.
+A Node.js JavaScript server that analyzes Marvel movie data using The Movie Database (TMDB) API.
 
 ## Assignment Overview
 
@@ -11,13 +11,13 @@ This server answers three key questions about Marvel actors and characters:
 
 ## Features
 
-- ✅ TypeScript for type safety
+- ✅ Modern JavaScript (ES6+) 
 - ✅ Express.js web framework
 - ✅ TMDB API integration with performance optimizations
 - ✅ Parallel API requests for fast data fetching
 - ✅ Smart character normalization and matching
 - ✅ Error handling middleware
-- ✅ Development hot reload with tsx
+- ✅ Development hot reload with nodemon
 
 ## Getting Started
 
@@ -91,33 +91,30 @@ npm run dev
 
 ```
 src/
-├── index.ts              # Main server file
-├── data.ts               # Marvel movies and actors data (from skeleton)
+├── index.js              # Main server file
+├── dataForQuestions.js   # Marvel movies and actors data (from skeleton)
 ├── config/               # Configuration files
-│   └── index.ts          # App configuration
+│   └── index.js          # App configuration
 ├── controllers/          # Request handlers and business logic
-│   └── marvelController.ts  # Marvel assignment endpoints
+│   └── marvelController.js  # Marvel assignment endpoints
 ├── middleware/           # Custom middleware
-│   └── errorHandler.ts   # Error handling middleware
+│   └── errorHandler.js   # Error handling middleware
 ├── providers/            # External API providers
-│   └── tmdbProvider.ts   # TMDB API client
+│   └── tmdbProvider.js   # TMDB API client
 ├── routes/               # Route definitions
-│   ├── index.ts          # Main route file
-│   └── marvelRoutes.ts   # Marvel assignment routes
-├── services/             # Business logic and external API calls
-│   └── marvelAnalysisService.ts  # Marvel data analysis
-└── types/                # TypeScript type definitions
-    └── index.ts          # Common interfaces and types
+│   ├── index.js          # Main route file
+│   └── marvelRoutes.js   # Marvel assignment routes
+└── services/             # Business logic and external API calls
+    └── marvelAnalysisService.js  # Marvel data analysis
 tests/                    # Test files
-├── setup.ts              # Test configuration
+├── setup.js              # Test configuration
 ├── mocks/                # Mock data for testing
+│   └── tmdbMockData.js   # Mock TMDB responses
 ├── controllers/          # Controller unit tests
 ├── providers/            # Provider unit tests
-├── services/             # Service unit tests
-└── integration/          # Integration tests
-dist/                     # Compiled JavaScript (generated)
+└── services/             # Service unit tests
 package.json              # Dependencies and scripts
-tsconfig.json             # TypeScript configuration
+jest.config.js            # Jest testing configuration
 .gitignore               # Git ignore rules
 ```
 
@@ -164,7 +161,6 @@ The project includes comprehensive test coverage:
 
 ### Test Types
 - **Unit Tests**: Test individual components in isolation
-- **Integration Tests**: Test API endpoints end-to-end
 - **Mocking**: TMDB API calls are mocked to avoid external dependencies
 
 ### Running Tests
@@ -183,13 +179,12 @@ npm run test:coverage
 - **Controllers**: Test HTTP request/response handling
 - **Services**: Test business logic and data processing
 - **Providers**: Test external API integration
-- **Integration**: Test complete API workflows
 
 ## Development
 
 The server includes:
-- Hot reload during development
-- TypeScript compilation with strict type checking
+- Hot reload during development with nodemon
+- Modern JavaScript features
 - Comprehensive error handling
 - Security middleware (Helmet, CORS)
 - Performance optimizations for API calls

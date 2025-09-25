@@ -1,18 +1,18 @@
-import { 
+const { 
   getMoviesPerActor, 
   getActorsWithMultipleCharacters, 
   getCharactersWithMultipleActors 
-} from '../../src/services/marvelAnalysisService';
-import { tmdbProvider } from '../../src/providers/tmdbProvider';
-import { 
+} = require('../../src/services/marvelAnalysisService');
+const { tmdbProvider } = require('../../src/providers/tmdbProvider');
+const { 
   mockMovieWithCredits, 
   mockMovieWithMultipleCharacters,
   mockCharacterWithMultipleActors 
-} from '../mocks/tmdbMockData';
+} = require('../mocks/tmdbMockData');
 
 // Mock the TMDB provider
 jest.mock('../../src/providers/tmdbProvider');
-const mockTmdbProvider = tmdbProvider as jest.Mocked<typeof tmdbProvider>;
+const mockTmdbProvider = tmdbProvider;
 
 describe('Marvel Analysis Service', () => {
   beforeEach(() => {

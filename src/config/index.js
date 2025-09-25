@@ -1,4 +1,4 @@
-export const config = {
+const config = {
   port: process.env.PORT || 3000,
   nodeEnv: process.env.NODE_ENV || 'development',
   apiVersion: '1.0.0',
@@ -16,3 +16,5 @@ export const config = {
     timeout: 10000
   }
 };
+
+module.exports = { config };

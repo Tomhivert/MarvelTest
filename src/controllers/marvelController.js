@@ -1,17 +1,15 @@
-import { Request, Response } from 'express';
-import { 
+const { 
   getMoviesPerActor, 
   getActorsWithMultipleCharacters, 
   getCharactersWithMultipleActors 
-} from '../services/marvelAnalysisService';
-import { ApiResponse } from '../types';
+} = require('../services/marvelAnalysisService');
 
-export const moviesPerActor = async (req: Request, res: Response): Promise<void> => {
+const moviesPerActor = async (req, res) => {
   try {
     console.log('Fetching movies per actor...');
     const data = await getMoviesPerActor();
     
-    const response: ApiResponse = {
+    const response = {
       success: true,
       data,
       message: 'Movies per actor retrieved successfully',
@@ -21,7 +19,7 @@ export const moviesPerActor = async (req: Request, res: Response): Promise<void>
     res.json(response);
   } catch (error) {
     console.error('Error in moviesPerActor:', error);
-    const response: ApiResponse = {
+    const response = {
       success: false,
       error: 'Failed to retrieve movies per actor',
       message: error instanceof Error ? error.message : 'Unknown error',
@@ -32,12 +30,12 @@ export const moviesPerActor = async (req: Request, res: Response): Promise<void>
   }
 };
 
-export const actorsWithMultipleCharacters = async (req: Request, res: Response): Promise<void> => {
+const actorsWithMultipleCharacters = async (req, res) => {
   try {
     console.log('Fetching actors with multiple characters...');
     const data = await getActorsWithMultipleCharacters();
     
-    const response: ApiResponse = {
+    const response = {
       success: true,
       data,
       message: 'Actors with multiple characters retrieved successfully',
@@ -47,7 +45,7 @@ export const actorsWithMultipleCharacters = async (req: Request, res: Response):
     res.json(response);
   } catch (error) {
     console.error('Error in actorsWithMultipleCharacters:', error);
-    const response: ApiResponse = {
+    const response = {
       success: false,
       error: 'Failed to retrieve actors with multiple characters',
       message: error instanceof Error ? error.message : 'Unknown error',
@@ -58,12 +56,12 @@ export const actorsWithMultipleCharacters = async (req: Request, res: Response):
   }
 };
 
-export const charactersWithMultipleActors = async (req: Request, res: Response): Promise<void> => {
+const charactersWithMultipleActors = async (req, res) => {
   try {
     console.log('Fetching characters with multiple actors...');
     const data = await getCharactersWithMultipleActors();
     
-    const response: ApiResponse = {
+    const response = {
       success: true,
       data,
       message: 'Characters with multiple actors retrieved successfully',
@@ -73,7 +71,7 @@ export const charactersWithMultipleActors = async (req: Request, res: Response):
     res.json(response);
   } catch (error) {
     console.error('Error in charactersWithMultipleActors:', error);
-    const response: ApiResponse = {
+    const response = {
       success: false,
       error: 'Failed to retrieve characters with multiple actors',
       message: error instanceof Error ? error.message : 'Unknown error',
@@ -82,4 +80,10 @@ export const charactersWithMultipleActors = async (req: Request, res: Response):
 
     res.status(500).json(response);
   }
+};
+
+module.exports = {
+  moviesPerActor,
+  actorsWithMultipleCharacters,
+  charactersWithMultipleActors
 };

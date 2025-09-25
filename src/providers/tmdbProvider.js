@@ -1,10 +1,7 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { config } from '../config';
-import { TMDBMovie, TMDBMovieCredits } from '../types';
+const axios = require('axios');
+const { config } = require('../config');
 
-export class TMDBProvider {
-  private client: AxiosInstance;
-
+class TMDBProvider {
   constructor() {
     this.client = axios.create({
       baseURL: config.tmdb.baseUrl,
@@ -15,30 +12,10 @@ export class TMDBProvider {
     });
   }
 
-  async getMovieDetails(movieId: number): Promise<TMDBMovie> {
-    try {
-      const response: AxiosResponse<TMDBMovie> = await this.client.get(`/movie/${movieId}`);
-      return response.data;
-    } catch (error) {
-      console.error(`Error fetching movie details for ID ${movieId}:`, error);
-      throw new Error(`Failed to fetch movie details for ID ${movieId}`);
-    }
-  }
-
-  async getMovieCredits(movieId: number): Promise<TMDBMovieCredits> {
-    try {
-      const response: AxiosResponse<TMDBMovieCredits> = await this.client.get(`/movie/${movieId}/credits`);
-      return response.data;
-    } catch (error) {
-      console.error(`Error fetching movie credits for ID ${movieId}:`, error);
-      throw new Error(`Failed to fetch movie credits for ID ${movieId}`);
-    }
-  }
-
-  async getMovieWithCredits(movieId: number): Promise<TMDBMovie & { credits: TMDBMovieCredits }> {
+  async getMovieWithCredits(movieId) {
     try {
       // Use append_to_response to get movie details and credits in a single API call
-      const response: AxiosResponse<TMDBMovie & { credits: TMDBMovieCredits }> = await this.client.get(
+      const response = await this.client.get(
         `/movie/${movieId}?append_to_response=credits`
       );
       
@@ -49,7 +26,7 @@ export class TMDBProvider {
     }
   }
 
-  async getAllMarvelMoviesWithCredits(movieIds: number[]): Promise<(TMDBMovie & { credits: TMDBMovieCredits })[]> {
+  async getAllMarvelMoviesWithCredits(movieIds) {
     try {
       console.log(`Fetching details for ${movieIds.length} Marvel movies using parallel requests...`);
       
@@ -70,9 +47,7 @@ export class TMDBProvider {
       
       // Extract successful results
       const movies = results
-        .filter((result): result is PromiseFulfilledResult<TMDBMovie & { credits: TMDBMovieCredits }> => 
-          result.status === 'fulfilled'
-        )
+        .filter((result) => result.status === 'fulfilled')
         .map(result => result.value);
       
       const failedCount = results.length - movies.length;
@@ -90,4 +65,5 @@ export class TMDBProvider {
 }
 
 // Export a singleton instance
-export const tmdbProvider = new TMDBProvider();
+const tmdbProvider = new TMDBProvider();
+module.exports = { TMDBProvider, tmdbProvider };

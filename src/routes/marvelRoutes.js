@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { 
+const { Router } = require('express');
+const { 
   moviesPerActor, 
   actorsWithMultipleCharacters, 
   charactersWithMultipleActors 
-} from '../controllers/marvelController';
+} = require('../controllers/marvelController');
 
 const router = Router();
 
@@ -12,4 +12,4 @@ router.get('/moviesPerActor', moviesPerActor);
 router.get('/actorsWithMultipleCharacters', actorsWithMultipleCharacters);
 router.get('/charactersWithMultipleActors', charactersWithMultipleActors);
 
-export default router;
+module.exports = router;

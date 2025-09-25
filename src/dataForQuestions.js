@@ -54,4 +54,4 @@ const actors = [
     'Dave Bautista',
 ];
 
-export { movies, actors };
+module.exports = { movies, actors };

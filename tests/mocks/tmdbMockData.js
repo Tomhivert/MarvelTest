@@ -1,6 +1,4 @@
-import { TMDBMovie, TMDBMovieCredits } from '../../src/types';
-
-export const mockMovieWithCredits: TMDBMovie & { credits: TMDBMovieCredits } = {
+const mockMovieWithCredits = {
   id: 1726,
   title: 'Iron Man',
   overview: 'After being held captive in an Afghan cave...',
@@ -24,7 +22,7 @@ export const mockMovieWithCredits: TMDBMovie & { credits: TMDBMovieCredits } = {
   }
 };
 
-export const mockMovieWithMultipleCharacters: TMDBMovie & { credits: TMDBMovieCredits } = {
+const mockMovieWithMultipleCharacters = {
   id: 99861,
   title: 'Avengers: Age of Ultron',
   overview: 'When Tony Stark tries to jumpstart...',
@@ -54,7 +52,7 @@ export const mockMovieWithMultipleCharacters: TMDBMovie & { credits: TMDBMovieCr
   }
 };
 
-export const mockActorWithSameCharacterMultipleMovies = [
+const mockActorWithSameCharacterMultipleMovies = [
   {
     id: 1726,
     title: 'Iron Man',
@@ -87,7 +85,7 @@ export const mockActorWithSameCharacterMultipleMovies = [
   }
 ];
 
-export const mockCharacterWithMultipleActors: TMDBMovie & { credits: TMDBMovieCredits } = {
+const mockCharacterWithMultipleActors = {
   id: 271110,
   title: 'Captain America: Civil War',
   overview: 'Following the events of Age of Ultron...',
@@ -109,4 +107,11 @@ export const mockCharacterWithMultipleActors: TMDBMovie & { credits: TMDBMovieCr
       }
     ]
   }
+};
+
+module.exports = {
+  mockMovieWithCredits,
+  mockMovieWithMultipleCharacters,
+  mockActorWithSameCharacterMultipleMovies,
+  mockCharacterWithMultipleActors
 };

@@ -1,13 +1,13 @@
-import axios from 'axios';
-import { TMDBProvider } from '../../src/providers/tmdbProvider';
-import { mockMovieWithCredits } from '../mocks/tmdbMockData';
+const axios = require('axios');
+const { TMDBProvider } = require('../../src/providers/tmdbProvider');
+const { mockMovieWithCredits } = require('../mocks/tmdbMockData');
 
 // Mock axios
 jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+const mockedAxios = axios;
 
 describe('TMDB Provider', () => {
-  let tmdbProvider: TMDBProvider;
+  let tmdbProvider;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -16,54 +16,6 @@ describe('TMDB Provider', () => {
     mockedAxios.create.mockReturnValue(mockedAxios);
     
     tmdbProvider = new TMDBProvider();
-  });
-
-  describe('getMovieDetails', () => {
-    it('should fetch movie details successfully', async () => {
-      const movieData = {
-        id: 1726,
-        title: 'Iron Man',
-        overview: 'After being held captive...',
-        release_date: '2008-05-02'
-      };
-
-      mockedAxios.get.mockResolvedValue({ data: movieData });
-
-      const result = await tmdbProvider.getMovieDetails(1726);
-
-      expect(mockedAxios.get).toHaveBeenCalledWith('/movie/1726');
-      expect(result).toEqual(movieData);
-    });
-
-    it('should handle API errors gracefully', async () => {
-      mockedAxios.get.mockRejectedValue(new Error('Network Error'));
-
-      await expect(tmdbProvider.getMovieDetails(1726))
-        .rejects.toThrow('Failed to fetch movie details for ID 1726');
-    });
-  });
-
-  describe('getMovieCredits', () => {
-    it('should fetch movie credits successfully', async () => {
-      const creditsData = {
-        id: 1726,
-        cast: [
-          {
-            id: 3223,
-            name: 'Robert Downey Jr.',
-            character: 'Tony Stark / Iron Man',
-            order: 0
-          }
-        ]
-      };
-
-      mockedAxios.get.mockResolvedValue({ data: creditsData });
-
-      const result = await tmdbProvider.getMovieCredits(1726);
-
-      expect(mockedAxios.get).toHaveBeenCalledWith('/movie/1726/credits');
-      expect(result).toEqual(creditsData);
-    });
   });
 
   describe('getMovieWithCredits', () => {

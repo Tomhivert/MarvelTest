@@ -1,15 +1,21 @@
-# Marvel Test - Node.js TypeScript Web Server
+# Marvel Test - Marvel API Analysis Server
 
-A modern Node.js web server built with TypeScript and Express.
+A Node.js TypeScript server that analyzes Marvel movie data using The Movie Database (TMDB) API.
+
+## Assignment Overview
+
+This server answers three key questions about Marvel actors and characters:
+1. Which Marvel movies did each actor play in?
+2. Who are the actors who played more than one Marvel character?
+3. Which roles (characters) were played by more than one actor?
 
 ## Features
 
 - ✅ TypeScript for type safety
 - ✅ Express.js web framework
-- ✅ CORS support
-- ✅ Security headers with Helmet
-- ✅ JSON body parsing
-- ✅ Health check endpoint
+- ✅ TMDB API integration with performance optimizations
+- ✅ Parallel API requests for fast data fetching
+- ✅ Smart character normalization and matching
 - ✅ Error handling middleware
 - ✅ Development hot reload with tsx
 
@@ -32,7 +38,10 @@ npm install
 npm run dev
 ```
 
-3. Open your browser and visit: http://localhost:3000
+3. Test the endpoints:
+   - http://localhost:3000/moviesPerActor
+   - http://localhost:3000/actorsWithMultipleCharacters  
+   - http://localhost:3000/charactersWithMultipleActors
 
 ### Available Scripts
 
@@ -40,34 +49,72 @@ npm run dev
 - `npm run build` - Build the project for production
 - `npm start` - Start the production server
 - `npm run clean` - Clean the dist directory
+- `npm test` - Run all tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Run tests with coverage report
 
 ### API Endpoints
 
-- `GET /` - Welcome message
-- `GET /health` - Health check endpoint
-- `GET /api/hello?name=YourName` - Hello endpoint with optional name parameter
+#### Assignment Endpoints
+- `GET /moviesPerActor` - Which Marvel movies did each actor play in?
+- `GET /actorsWithMultipleCharacters` - Who are the actors who played more than one Marvel character?
+- `GET /charactersWithMultipleActors` - Roles (characters) that were played by more than one actor?
+
+#### Response Structures
+```json
+// /moviesPerActor
+{ 
+  "success": true,
+  "data": { "actorName": ["movie1", "movie2"] },
+  "message": "Movies per actor retrieved successfully",
+  "timestamp": "2025-09-25T..."
+}
+
+// /actorsWithMultipleCharacters  
+{ 
+  "success": true,
+  "data": { "actorName": [{"movieName": "movie", "characterName": "character"}] },
+  "message": "Actors with multiple characters retrieved successfully",
+  "timestamp": "2025-09-25T..."
+}
+
+// /charactersWithMultipleActors
+{ 
+  "success": true,
+  "data": { "characterName": [{"movieName": "movie", "actorName": "actor"}] },
+  "message": "Characters with multiple actors retrieved successfully",
+  "timestamp": "2025-09-25T..."
+}
+```
 
 ### Project Structure
 
 ```
 src/
 ├── index.ts              # Main server file
+├── data.ts               # Marvel movies and actors data (from skeleton)
 ├── config/               # Configuration files
 │   └── index.ts          # App configuration
 ├── controllers/          # Request handlers and business logic
-│   ├── greetingController.ts
-│   └── healthController.ts
+│   └── marvelController.ts  # Marvel assignment endpoints
 ├── middleware/           # Custom middleware
 │   └── errorHandler.ts   # Error handling middleware
+├── providers/            # External API providers
+│   └── tmdbProvider.ts   # TMDB API client
 ├── routes/               # Route definitions
 │   ├── index.ts          # Main route file
-│   ├── apiRoutes.ts      # API routes
-│   └── healthRoutes.ts   # Health check routes
+│   └── marvelRoutes.ts   # Marvel assignment routes
 ├── services/             # Business logic and external API calls
-│   ├── greetingService.ts
-│   └── healthService.ts
+│   └── marvelAnalysisService.ts  # Marvel data analysis
 └── types/                # TypeScript type definitions
     └── index.ts          # Common interfaces and types
+tests/                    # Test files
+├── setup.ts              # Test configuration
+├── mocks/                # Mock data for testing
+├── controllers/          # Controller unit tests
+├── providers/            # Provider unit tests
+├── services/             # Service unit tests
+└── integration/          # Integration tests
 dist/                     # Compiled JavaScript (generated)
 package.json              # Dependencies and scripts
 tsconfig.json             # TypeScript configuration
@@ -76,21 +123,77 @@ tsconfig.json             # TypeScript configuration
 
 ### Environment Variables
 
-Create a `.env` file in the root directory to customize:
+The project includes a `.env` file for local development. For production or custom setups, copy `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` with your configuration:
 
 ```env
+# TMDB API Configuration
+TMDB_API_KEY=your_tmdb_api_key_here
+TMDB_BASE_URL=https://api.themoviedb.org/3
+
+# Server Configuration
 PORT=3000
 NODE_ENV=development
 ```
+
+**Note**: The provided API key in the assignment is already configured for local development.
+
+### Performance Optimizations
+
+The implementation uses several performance optimizations:
+- **Parallel API calls** using `Promise.allSettled()` instead of sequential requests
+- **append_to_response** parameter to fetch movie details and credits in a single API call
+- **Efficient data processing** with normalized character name matching
+
+## How It Works
+
+1. **Data Source**: Uses Marvel movies and actors from the provided skeleton
+2. **API Integration**: Fetches detailed movie credits from TMDB API
+3. **Performance**: Uses parallel requests and `append_to_response` for fast data retrieval
+4. **Analysis**: Processes cast data to answer the assignment questions
+5. **Smart Matching**: Normalizes character names to detect truly different roles
+
+## Testing
+
+The project includes comprehensive test coverage:
+
+### Test Types
+- **Unit Tests**: Test individual components in isolation
+- **Integration Tests**: Test API endpoints end-to-end
+- **Mocking**: TMDB API calls are mocked to avoid external dependencies
+
+### Running Tests
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode (for development)
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+```
+
+### Test Structure
+- **Controllers**: Test HTTP request/response handling
+- **Services**: Test business logic and data processing
+- **Providers**: Test external API integration
+- **Integration**: Test complete API workflows
 
 ## Development
 
 The server includes:
 - Hot reload during development
-- TypeScript compilation
-- Error handling
-- Security middleware
-- CORS support
+- TypeScript compilation with strict type checking
+- Comprehensive error handling
+- Security middleware (Helmet, CORS)
+- Performance optimizations for API calls
+- Full test suite with Jest and Supertest
 
 ## Production
 

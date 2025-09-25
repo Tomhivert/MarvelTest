@@ -1,15 +1,9 @@
 import { Router } from 'express';
-import { getWelcome } from '../controllers/greetingController';
-import healthRoutes from './healthRoutes';
-import apiRoutes from './apiRoutes';
+import marvelRoutes from './marvelRoutes';
 
 const router = Router();
 
-// Root route
-router.get('/', getWelcome);
-
-// Mount sub-routes
-router.use('/health', healthRoutes);
-router.use('/api', apiRoutes);
+// Marvel assignment routes
+router.use('/', marvelRoutes);
 
 export default router;

@@ -9,15 +9,10 @@ export const config = {
     credentials: true
   },
   
-  // Database configuration (for future use)
-  database: {
-    url: process.env.DATABASE_URL || '',
-    maxConnections: parseInt(process.env.DB_MAX_CONNECTIONS || '10')
-  },
-  
-  // External API configuration (for future Marvel API integration)
-  externalApis: {
-    marvelApiKey: process.env.MARVEL_API_KEY || '',
-    marvelPrivateKey: process.env.MARVEL_PRIVATE_KEY || ''
+  // TMDB API configuration
+  tmdb: {
+    apiKey: process.env.TMDB_API_KEY || '',
+    baseUrl: process.env.TMDB_BASE_URL || 'https://api.themoviedb.org/3',
+    timeout: 10000
   }
 };

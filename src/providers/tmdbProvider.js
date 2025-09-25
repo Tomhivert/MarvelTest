@@ -7,18 +7,16 @@ class TMDBProvider {
       baseURL: config.tmdb.baseUrl,
       timeout: config.tmdb.timeout,
       params: {
-        api_key: config.tmdb.apiKey
-      }
+        api_key: config.tmdb.apiKey,
+      },
     });
   }
 
   async getMovieWithCredits(movieId) {
     try {
       // Use append_to_response to get movie details and credits in a single API call
-      const response = await this.client.get(
-        `/movie/${movieId}?append_to_response=credits`
-      );
-      
+      const response = await this.client.get(`/movie/${movieId}?append_to_response=credits`);
+
       return response.data;
     } catch (error) {
       console.error(`Error fetching movie with credits for ID ${movieId}:`, error);
@@ -28,10 +26,12 @@ class TMDBProvider {
 
   async getAllMarvelMoviesWithCredits(movieIds) {
     try {
-      console.log(`Fetching details for ${movieIds.length} Marvel movies using parallel requests...`);
-      
+      console.log(
+        `Fetching details for ${movieIds.length} Marvel movies using parallel requests...`
+      );
+
       // Use Promise.allSettled for parallel requests with error handling
-      const moviePromises = movieIds.map(async (movieId) => {
+      const moviePromises = movieIds.map(async movieId => {
         try {
           const movie = await this.getMovieWithCredits(movieId);
           console.log(`✓ Fetched: ${movie.title} (ID: ${movieId})`);
@@ -41,20 +41,20 @@ class TMDBProvider {
           throw error;
         }
       });
-      
+
       // Execute all requests in parallel
       const results = await Promise.allSettled(moviePromises);
-      
+
       // Extract successful results
       const movies = results
-        .filter((result) => result.status === 'fulfilled')
+        .filter(result => result.status === 'fulfilled')
         .map(result => result.value);
-      
+
       const failedCount = results.length - movies.length;
       if (failedCount > 0) {
         console.warn(`⚠️  ${failedCount} movie(s) failed to fetch`);
       }
-      
+
       console.log(`Successfully fetched ${movies.length} out of ${movieIds.length} movies`);
       return movies;
     } catch (error) {

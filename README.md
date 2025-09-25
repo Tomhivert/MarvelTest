@@ -5,13 +5,14 @@ A Node.js JavaScript server that analyzes Marvel movie data using The Movie Data
 ## Assignment Overview
 
 This server answers three key questions about Marvel actors and characters:
+
 1. Which Marvel movies did each actor play in?
 2. Who are the actors who played more than one Marvel character?
 3. Which roles (characters) were played by more than one actor?
 
 ## Features
 
-- ✅ Modern JavaScript (ES6+) 
+- ✅ Modern JavaScript (ES6+)
 - ✅ Express.js web framework
 - ✅ TMDB API integration with performance optimizations
 - ✅ Parallel API requests for fast data fetching
@@ -29,18 +30,20 @@ This server answers three key questions about Marvel actors and characters:
 ### Installation
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Start the development server:
+
 ```bash
 npm run dev
 ```
 
 3. Test the endpoints:
    - http://localhost:3000/moviesPerActor
-   - http://localhost:3000/actorsWithMultipleCharacters  
+   - http://localhost:3000/actorsWithMultipleCharacters
    - http://localhost:3000/charactersWithMultipleActors
 
 ### Available Scripts
@@ -56,22 +59,24 @@ npm run dev
 ### API Endpoints
 
 #### Assignment Endpoints
+
 - `GET /moviesPerActor` - Which Marvel movies did each actor play in?
 - `GET /actorsWithMultipleCharacters` - Who are the actors who played more than one Marvel character?
 - `GET /charactersWithMultipleActors` - Roles (characters) that were played by more than one actor?
 
 #### Response Structures
+
 ```json
 // /moviesPerActor
-{ 
+{
   "success": true,
   "data": { "actorName": ["movie1", "movie2"] },
   "message": "Movies per actor retrieved successfully",
   "timestamp": "2025-09-25T..."
 }
 
-// /actorsWithMultipleCharacters  
-{ 
+// /actorsWithMultipleCharacters
+{
   "success": true,
   "data": { "actorName": [{"movieName": "movie", "characterName": "character"}] },
   "message": "Actors with multiple characters retrieved successfully",
@@ -79,7 +84,7 @@ npm run dev
 }
 
 // /charactersWithMultipleActors
-{ 
+{
   "success": true,
   "data": { "characterName": [{"movieName": "movie", "actorName": "actor"}] },
   "message": "Characters with multiple actors retrieved successfully",
@@ -115,6 +120,9 @@ tests/                    # Test files
 └── services/             # Service unit tests
 package.json              # Dependencies and scripts
 jest.config.js            # Jest testing configuration
+.eslintrc.js             # ESLint configuration
+.prettierrc.js           # Prettier configuration
+.eslintignore            # ESLint ignore rules
 .gitignore               # Git ignore rules
 ```
 
@@ -143,6 +151,7 @@ NODE_ENV=development
 ### Performance Optimizations
 
 The implementation uses several performance optimizations:
+
 - **Parallel API calls** using `Promise.allSettled()` instead of sequential requests
 - **append_to_response** parameter to fetch movie details and credits in a single API call
 - **Efficient data processing** with normalized character name matching
@@ -160,10 +169,12 @@ The implementation uses several performance optimizations:
 The project includes comprehensive test coverage:
 
 ### Test Types
+
 - **Unit Tests**: Test individual components in isolation
 - **Mocking**: TMDB API calls are mocked to avoid external dependencies
 
 ### Running Tests
+
 ```bash
 # Run all tests
 npm test
@@ -176,30 +187,73 @@ npm run test:coverage
 ```
 
 ### Test Structure
+
 - **Controllers**: Test HTTP request/response handling
 - **Services**: Test business logic and data processing
 - **Providers**: Test external API integration
 
+## Code Quality
+
+The project enforces code quality standards using:
+
+### ESLint & Prettier
+
+- **ESLint**: Industry best practices with Airbnb config
+- **Prettier**: Consistent code formatting
+- **Jest Plugin**: Testing-specific linting rules
+
+### Running Quality Checks
+
+```bash
+# Lint code
+npm run lint
+
+# Auto-fix linting issues
+npm run lint:fix
+
+# Check for linting issues (CI-friendly)
+npm run lint:check
+
+# Format code with Prettier
+npm run format
+
+# Check formatting
+npm run format:check
+```
+
+### ESLint Configuration
+
+- **Airbnb Base**: Industry-standard JavaScript rules
+- **Node.js**: Server-side specific rules
+- **Jest**: Testing framework rules
+- **Prettier**: Code formatting integration
+- **Security**: Basic security best practices
+
 ## Development
 
 The server includes:
+
 - Hot reload during development with nodemon
 - Modern JavaScript features
 - Comprehensive error handling
 - Security middleware (Helmet, CORS)
 - Performance optimizations for API calls
 - Full test suite with Jest and Supertest
+- ESLint with industry best practices
+- Prettier for code formatting
 
 ## Production
 
 To deploy to production:
 
 1. Build the project:
+
 ```bash
 npm run build
 ```
 
 2. Start the production server:
+
 ```bash
 npm start
 ```
@@ -207,4 +261,3 @@ npm start
 ## License
 
 MIT
-

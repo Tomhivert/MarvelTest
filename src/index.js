@@ -33,8 +33,9 @@ if (require.main === module) {
     console.log(`   GET /actorsWithMultipleCharacters`);
     console.log(`   GET /charactersWithMultipleActors`);
     console.log(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
-    
+
     // Log Marvel data like the original skeleton
+    // eslint-disable-next-line global-require
     const { movies, actors } = require('./dataForQuestions');
     console.log('\n--- Marvel Data Loaded ---');
     console.log(`📺 ${Object.keys(movies).length} Marvel movies`);

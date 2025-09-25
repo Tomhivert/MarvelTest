@@ -10,16 +10,16 @@ const mockMovieWithCredits = {
         id: 3223,
         name: 'Robert Downey Jr.',
         character: 'Tony Stark / Iron Man',
-        order: 0
+        order: 0,
       },
       {
         id: 12835,
         name: 'Gwyneth Paltrow',
         character: 'Pepper Potts',
-        order: 1
-      }
-    ]
-  }
+        order: 1,
+      },
+    ],
+  },
 };
 
 const mockMovieWithMultipleCharacters = {
@@ -34,22 +34,22 @@ const mockMovieWithMultipleCharacters = {
         id: 3223,
         name: 'Robert Downey Jr.',
         character: 'Tony Stark / Iron Man',
-        order: 0
+        order: 0,
       },
       {
         id: 3223,
         name: 'Robert Downey Jr.',
         character: 'The Vision', // Different character
-        order: 10
+        order: 10,
       },
       {
         id: 1896,
         name: 'Chris Evans',
         character: 'Steve Rogers / Captain America',
-        order: 1
-      }
-    ]
-  }
+        order: 1,
+      },
+    ],
+  },
 };
 
 const mockActorWithSameCharacterMultipleMovies = [
@@ -63,10 +63,10 @@ const mockActorWithSameCharacterMultipleMovies = [
           id: 1269,
           name: 'Chris Hemsworth',
           character: 'Thor',
-          order: 0
-        }
-      ]
-    }
+          order: 0,
+        },
+      ],
+    },
   },
   {
     id: 10195,
@@ -78,11 +78,11 @@ const mockActorWithSameCharacterMultipleMovies = [
           id: 1269,
           name: 'Chris Hemsworth',
           character: 'Thor',
-          order: 0
-        }
-      ]
-    }
-  }
+          order: 0,
+        },
+      ],
+    },
+  },
 ];
 
 const mockCharacterWithMultipleActors = {
@@ -97,21 +97,21 @@ const mockCharacterWithMultipleActors = {
         id: 1896,
         name: 'Chris Evans',
         character: 'Spider-Man',
-        order: 0
+        order: 0,
       },
       {
         id: 1136406,
         name: 'Tom Holland',
         character: 'Spider-Man', // Same character, different actor
-        order: 1
-      }
-    ]
-  }
+        order: 1,
+      },
+    ],
+  },
 };
 
 module.exports = {
   mockMovieWithCredits,
   mockMovieWithMultipleCharacters,
   mockActorWithSameCharacterMultipleMovies,
-  mockCharacterWithMultipleActors
+  mockCharacterWithMultipleActors,
 };

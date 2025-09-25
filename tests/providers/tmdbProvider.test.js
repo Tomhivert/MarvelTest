@@ -11,10 +11,10 @@ describe('TMDB Provider', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     // Mock axios.create to return mocked axios instance
     mockedAxios.create.mockReturnValue(mockedAxios);
-    
+
     tmdbProvider = new TMDBProvider();
   });
 
@@ -31,8 +31,9 @@ describe('TMDB Provider', () => {
     it('should handle errors when fetching movie with credits', async () => {
       mockedAxios.get.mockRejectedValue(new Error('API Error'));
 
-      await expect(tmdbProvider.getMovieWithCredits(1726))
-        .rejects.toThrow('Failed to fetch movie with credits for ID 1726');
+      await expect(tmdbProvider.getMovieWithCredits(1726)).rejects.toThrow(
+        'Failed to fetch movie with credits for ID 1726'
+      );
     });
   });
 
@@ -41,7 +42,7 @@ describe('TMDB Provider', () => {
       const movieIds = [1726, 1724];
       const mockMovies = [
         mockMovieWithCredits,
-        { ...mockMovieWithCredits, id: 1724, title: 'The Incredible Hulk' }
+        { ...mockMovieWithCredits, id: 1724, title: 'The Incredible Hulk' },
       ];
 
       mockedAxios.get

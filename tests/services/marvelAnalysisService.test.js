@@ -1,13 +1,13 @@
-const { 
-  getMoviesPerActor, 
-  getActorsWithMultipleCharacters, 
-  getCharactersWithMultipleActors 
+const {
+  getMoviesPerActor,
+  getActorsWithMultipleCharacters,
+  getCharactersWithMultipleActors,
 } = require('../../src/services/marvelAnalysisService');
 const { tmdbProvider } = require('../../src/providers/tmdbProvider');
-const { 
-  mockMovieWithCredits, 
+const {
+  mockMovieWithCredits,
   mockMovieWithMultipleCharacters,
-  mockCharacterWithMultipleActors 
+  mockCharacterWithMultipleActors,
 } = require('../mocks/tmdbMockData');
 
 // Mock the TMDB provider
@@ -21,9 +21,7 @@ describe('Marvel Analysis Service', () => {
 
   describe('getMoviesPerActor', () => {
     it('should return movies grouped by actor', async () => {
-      mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue([
-        mockMovieWithCredits
-      ]);
+      mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue([mockMovieWithCredits]);
 
       const result = await getMoviesPerActor();
 
@@ -42,15 +40,13 @@ describe('Marvel Analysis Service', () => {
               id: 99999,
               name: 'Unknown Actor',
               character: 'Unknown Character',
-              order: 0
-            }
-          ]
-        }
+              order: 0,
+            },
+          ],
+        },
       };
 
-      mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue([
-        movieWithUnknownActor
-      ]);
+      mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue([movieWithUnknownActor]);
 
       const result = await getMoviesPerActor();
 
@@ -61,7 +57,7 @@ describe('Marvel Analysis Service', () => {
       const duplicateMovie = { ...mockMovieWithCredits };
       mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue([
         mockMovieWithCredits,
-        duplicateMovie
+        duplicateMovie,
       ]);
 
       const result = await getMoviesPerActor();
@@ -73,7 +69,7 @@ describe('Marvel Analysis Service', () => {
   describe('getActorsWithMultipleCharacters', () => {
     it('should identify actors with truly different characters', async () => {
       mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue([
-        mockMovieWithMultipleCharacters
+        mockMovieWithMultipleCharacters,
       ]);
 
       const result = await getActorsWithMultipleCharacters();
@@ -98,10 +94,10 @@ describe('Marvel Analysis Service', () => {
                 id: 1269,
                 name: 'Chris Hemsworth',
                 character: 'Thor',
-                order: 0
-              }
-            ]
-          }
+                order: 0,
+              },
+            ],
+          },
         },
         {
           id: 10195,
@@ -115,16 +111,14 @@ describe('Marvel Analysis Service', () => {
                 id: 1269,
                 name: 'Chris Hemsworth',
                 character: 'Thor',
-                order: 0
-              }
-            ]
-          }
-        }
+                order: 0,
+              },
+            ],
+          },
+        },
       ];
 
-      mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue(
-        sameCharacterMovies
-      );
+      mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue(sameCharacterMovies);
 
       const result = await getActorsWithMultipleCharacters();
 
@@ -141,20 +135,20 @@ describe('Marvel Analysis Service', () => {
               id: 3223,
               name: 'Robert Downey Jr.',
               character: 'Tony Stark',
-              order: 0
+              order: 0,
             },
             {
               id: 3223,
               name: 'Robert Downey Jr.',
               character: 'Tony Stark!', // Same character with punctuation
-              order: 1
-            }
-          ]
-        }
+              order: 1,
+            },
+          ],
+        },
       };
 
       mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue([
-        movieWithSimilarCharacterNames
+        movieWithSimilarCharacterNames,
       ]);
 
       const result = await getActorsWithMultipleCharacters();
@@ -166,7 +160,7 @@ describe('Marvel Analysis Service', () => {
   describe('getCharactersWithMultipleActors', () => {
     it('should identify characters played by multiple actors', async () => {
       mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue([
-        mockCharacterWithMultipleActors
+        mockCharacterWithMultipleActors,
       ]);
 
       const result = await getCharactersWithMultipleActors();
@@ -182,13 +176,11 @@ describe('Marvel Analysis Service', () => {
         ...mockMovieWithCredits,
         credits: {
           id: 1726,
-          cast: []
-        }
+          cast: [],
+        },
       };
 
-      mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue([
-        movieWithoutCredits
-      ]);
+      mockTmdbProvider.getAllMarvelMoviesWithCredits.mockResolvedValue([movieWithoutCredits]);
 
       const result = await getCharactersWithMultipleActors();
 
@@ -198,9 +190,7 @@ describe('Marvel Analysis Service', () => {
 
   describe('Error handling', () => {
     it('should handle TMDB provider errors', async () => {
-      mockTmdbProvider.getAllMarvelMoviesWithCredits.mockRejectedValue(
-        new Error('TMDB API Error')
-      );
+      mockTmdbProvider.getAllMarvelMoviesWithCredits.mockRejectedValue(new Error('TMDB API Error'));
 
       await expect(getMoviesPerActor()).rejects.toThrow('TMDB API Error');
     });

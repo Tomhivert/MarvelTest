@@ -1,8 +1,8 @@
 const { Router } = require('express');
-const { 
-  moviesPerActor, 
-  actorsWithMultipleCharacters, 
-  charactersWithMultipleActors 
+const {
+  moviesPerActor,
+  actorsWithMultipleCharacters,
+  charactersWithMultipleActors,
 } = require('../controllers/marvelController');
 
 const router = Router();

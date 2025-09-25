@@ -1,31 +1,21 @@
 # Marvel Test - Marvel API Analysis Server
 
-A Node.js JavaScript server that analyzes Marvel movie data using The Movie Database (TMDB) API.
-
-## Assignment Overview
-
-This server answers three key questions about Marvel actors and characters:
-
-1. Which Marvel movies did each actor play in?
-2. Who are the actors who played more than one Marvel character?
-3. Which roles (characters) were played by more than one actor?
+A Node.js server that analyzes Marvel movie data using The Movie Database (TMDB) API.
 
 ## Features
 
-- ✅ Modern JavaScript (ES6+)
-- ✅ Express.js web framework
-- ✅ TMDB API integration with performance optimizations
-- ✅ Parallel API requests for fast data fetching
-- ✅ Smart character normalization and matching
-- ✅ Error handling middleware
-- ✅ Development hot reload with nodemon
+- Express.js web framework with modern JavaScript
+- TMDB API integration with parallel requests
+- Smart character normalization and matching
+- Comprehensive test coverage with Jest
+- ESLint + Prettier for code quality
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
-- npm or yarn
+- Node.js (v14 or higher)
+- npm
 
 ### Installation
 
@@ -46,217 +36,69 @@ npm run dev
    - http://localhost:3000/actorsWithMultipleCharacters
    - http://localhost:3000/charactersWithMultipleActors
 
-### Available Scripts
+## API Endpoints
 
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Build the project for production
-- `npm start` - Start the production server
-- `npm run clean` - Clean the dist directory
-- `npm test` - Run all tests
-- `npm run test:watch` - Run tests in watch mode
-- `npm run test:coverage` - Run tests with coverage report
+### Assignment Questions
 
-### API Endpoints
+1. **`GET /moviesPerActor`** - Which Marvel movies did each actor play in?
+2. **`GET /actorsWithMultipleCharacters`** - Who played more than one Marvel character?
+3. **`GET /charactersWithMultipleActors`** - Which roles were played by multiple actors?
 
-#### Assignment Endpoints
-
-- `GET /moviesPerActor` - Which Marvel movies did each actor play in?
-- `GET /actorsWithMultipleCharacters` - Who are the actors who played more than one Marvel character?
-- `GET /charactersWithMultipleActors` - Roles (characters) that were played by more than one actor?
-
-#### Response Structures
+### Response Format
 
 ```json
-// /moviesPerActor
 {
   "success": true,
-  "data": { "actorName": ["movie1", "movie2"] },
-  "message": "Movies per actor retrieved successfully",
-  "timestamp": "2025-09-25T..."
-}
-
-// /actorsWithMultipleCharacters
-{
-  "success": true,
-  "data": { "actorName": [{"movieName": "movie", "characterName": "character"}] },
-  "message": "Actors with multiple characters retrieved successfully",
-  "timestamp": "2025-09-25T..."
-}
-
-// /charactersWithMultipleActors
-{
-  "success": true,
-  "data": { "characterName": [{"movieName": "movie", "actorName": "actor"}] },
-  "message": "Characters with multiple actors retrieved successfully",
+  "data": { ... },
+  "message": "...",
   "timestamp": "2025-09-25T..."
 }
 ```
 
-### Project Structure
-
-```
-src/
-├── index.js              # Main server file
-├── dataForQuestions.js   # Marvel movies and actors data (from skeleton)
-├── config/               # Configuration files
-│   └── index.js          # App configuration
-├── controllers/          # Request handlers and business logic
-│   └── marvelController.js  # Marvel assignment endpoints
-├── middleware/           # Custom middleware
-│   └── errorHandler.js   # Error handling middleware
-├── providers/            # External API providers
-│   └── tmdbProvider.js   # TMDB API client
-├── routes/               # Route definitions
-│   ├── index.js          # Main route file
-│   └── marvelRoutes.js   # Marvel assignment routes
-└── services/             # Business logic and external API calls
-    └── marvelAnalysisService.js  # Marvel data analysis
-tests/                    # Test files
-├── setup.js              # Test configuration
-├── mocks/                # Mock data for testing
-│   └── tmdbMockData.js   # Mock TMDB responses
-├── controllers/          # Controller unit tests
-├── providers/            # Provider unit tests
-└── services/             # Service unit tests
-package.json              # Dependencies and scripts
-jest.config.js            # Jest testing configuration
-.eslintrc.js             # ESLint configuration
-.prettierrc.js           # Prettier configuration
-.eslintignore            # ESLint ignore rules
-.gitignore               # Git ignore rules
-```
-
-### Environment Variables
-
-The project includes a `.env` file for local development. For production or custom setups, copy `.env.example`:
+## Scripts
 
 ```bash
-cp .env.example .env
+npm run dev          # Development server with hot reload
+npm start           # Production server
+npm test            # Run tests
+npm run test:watch  # Watch mode for tests
+npm run lint        # Check code quality
+npm run format      # Format code
 ```
 
-Then edit `.env` with your configuration:
+## Environment Variables
+
+Copy `.env.example` to `.env` and configure:
 
 ```env
-# TMDB API Configuration
-TMDB_API_KEY=your_tmdb_api_key_here
-TMDB_BASE_URL=https://api.themoviedb.org/3
-
-# Server Configuration
+TMDB_API_KEY=your_api_key_here
 PORT=3000
 NODE_ENV=development
 ```
 
-**Note**: The provided API key in the assignment is already configured for local development.
+## Project Structure
 
-### Performance Optimizations
+```
+src/
+├── index.js                     # Server entry point
+├── dataForQuestions.js          # Marvel data
+├── controllers/                 # Request handlers
+├── services/                    # Business logic
+├── providers/                   # External APIs
+├── routes/                      # Route definitions
+└── middleware/                  # Custom middleware
 
-The implementation uses several performance optimizations:
-
-- **Parallel API calls** using `Promise.allSettled()` instead of sequential requests
-- **append_to_response** parameter to fetch movie details and credits in a single API call
-- **Efficient data processing** with normalized character name matching
-
-## How It Works
-
-1. **Data Source**: Uses Marvel movies and actors from the provided skeleton
-2. **API Integration**: Fetches detailed movie credits from TMDB API
-3. **Performance**: Uses parallel requests and `append_to_response` for fast data retrieval
-4. **Analysis**: Processes cast data to answer the assignment questions
-5. **Smart Matching**: Normalizes character names to detect truly different roles
-
-## Testing
-
-The project includes comprehensive test coverage:
-
-### Test Types
-
-- **Unit Tests**: Test individual components in isolation
-- **Mocking**: TMDB API calls are mocked to avoid external dependencies
-
-### Running Tests
-
-```bash
-# Run all tests
-npm test
-
-# Run tests in watch mode (for development)
-npm run test:watch
-
-# Generate coverage report
-npm run test:coverage
+tests/                           # Test files
+├── controllers/
+├── services/
+└── providers/
 ```
 
-### Test Structure
+## Performance Features
 
-- **Controllers**: Test HTTP request/response handling
-- **Services**: Test business logic and data processing
-- **Providers**: Test external API integration
-
-## Code Quality
-
-The project enforces code quality standards using:
-
-### ESLint & Prettier
-
-- **ESLint**: Industry best practices with Airbnb config
-- **Prettier**: Consistent code formatting
-- **Jest Plugin**: Testing-specific linting rules
-
-### Running Quality Checks
-
-```bash
-# Lint code
-npm run lint
-
-# Auto-fix linting issues
-npm run lint:fix
-
-# Check for linting issues (CI-friendly)
-npm run lint:check
-
-# Format code with Prettier
-npm run format
-
-# Check formatting
-npm run format:check
-```
-
-### ESLint Configuration
-
-- **Airbnb Base**: Industry-standard JavaScript rules
-- **Node.js**: Server-side specific rules
-- **Jest**: Testing framework rules
-- **Prettier**: Code formatting integration
-- **Security**: Basic security best practices
-
-## Development
-
-The server includes:
-
-- Hot reload during development with nodemon
-- Modern JavaScript features
-- Comprehensive error handling
-- Security middleware (Helmet, CORS)
-- Performance optimizations for API calls
-- Full test suite with Jest and Supertest
-- ESLint with industry best practices
-- Prettier for code formatting
-
-## Production
-
-To deploy to production:
-
-1. Build the project:
-
-```bash
-npm run build
-```
-
-2. Start the production server:
-
-```bash
-npm start
-```
+- **Parallel API requests** using `Promise.allSettled()`
+- **Single API calls** using TMDB's `append_to_response`
+- **Character normalization** for accurate matching
 
 ## License
 
